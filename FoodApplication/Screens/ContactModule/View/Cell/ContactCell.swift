@@ -1,0 +1,63 @@
+import UIKit
+
+final class ContactCell: UITableViewCell {
+    
+    // MARK: - Variable
+    static let identifier = "ContactCell"
+    
+    // MARK: - GUI Variables
+    let containerView = UIView()
+    let imageViewCell = UIImageView()
+    let labelsView = LabelsView()
+    
+    // MARK: - Init
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addSubviews()
+        makeConstraints()
+        setupView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Methods
+    private func addSubviews() {
+        contentView.addSubview(containerView)
+        containerView.addSubview(imageViewCell)
+        containerView.addSubview(labelsView)
+    }
+    
+    private func makeConstraints() {
+        containerView.snp.makeConstraints {
+            $0.top.equalTo(contentView.snp.top).offset(10)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(contentView.snp.bottom)
+        }
+        
+        imageViewCell.snp.makeConstraints {
+            $0.leading.equalTo(containerView.snp.leading).offset(16)
+            $0.centerY.equalTo(containerView.snp.centerY)
+        }
+       
+        labelsView.snp.makeConstraints {
+            $0.leading.equalTo(imageViewCell.snp.trailing).offset(16)
+            $0.centerY.equalTo(containerView.snp.centerY)
+        }
+    }
+    
+    private func setupView() {
+        imageViewCell.image = UIImage(named: "iconAddress")
+        imageViewCell.contentMode = .scaleAspectFit
+        imageViewCell.layer.cornerRadius = 5
+        imageViewCell.layer.borderWidth = 1
+        imageViewCell.layer.borderColor = UIColor.black.cgColor
+        labelsView.layer.borderColor = UIColor.white.cgColor
+    }
+    
+    func setContactModel(model: ContactModel) {
+        labelsView.titleLabel.text    = model.address
+        labelsView.descriptLabel.text = model.timeWork
+    }
+}
